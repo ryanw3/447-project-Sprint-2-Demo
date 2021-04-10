@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-div.a {
- text-aligned: center;
-}
+<link rel="stylesheet" href="style.css"/>
 </style>
 </head>
 <body>
 
 <div class="a">
-<h1> Login </h1>
+<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
+<h2 id = "loginlabel" class = "a"> <u>Please enter your username and password:</u> </h2>
 
 <form action="/action_page.php">
-  <label for="User">Username:</label>
-  <input type="text" id="User" name="User"><br><br>
-  <label for="pass">Password:</label>
-  <input type="text" id="pass" name="pass"><br><br>
-  <input type="submit" value="Submit">
+
+  <label  id = "usernamelabel" for="User">Username:</label>
+  <input id = "username" type="text" id="User" name="User"><br><br>
+  <label id = "passwordlabel" for="pass">Password:</label>
+  <input id = "password" type="password" id="pass" name="pass"><br><br>
+  <a href = "index.html"><input id = "submit" type="Button" value="Submit"></a>
 </form>
 </div>
 
