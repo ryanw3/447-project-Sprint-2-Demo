@@ -18,13 +18,22 @@
 
 <body>
 <h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
-<label for = "start" id = "datelabel"> Start date: </label>
-<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
+<form method="POST" action="/">
+	<label for = "start" id = "datelabel"> Start date: </label>
+	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
+	<button>submit</button>
+</form>
 <a href = "{{ url_for('auth.login') }}">
 <input type = "button" id = "login" value = "Log In"></input> </a>
 <div id="mapid" style="width: 800px; height: 600px;"></div>
 <script>
-
+	function myFunc(vars) {
+    	return vars
+	}
+	//tempData=myFunc("{{data}}");
+	//enc = encodeURI(tempData);	
+	//dec = decodeURI(enc);
+	console.log({{data|tojson|safe}});
 	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
 	
 	
