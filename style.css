@@ -2,6 +2,32 @@ body {
 		background-color: #CFEEFA;
 }
 
+ul {
+  list-style-type: none;
+  margin-bottom: 1%;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  z-index: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
 #databox {
 	display:inline-block;
 	float:left;
@@ -37,10 +63,9 @@ body {
 
 #title {
 	position:static;
-	margin:auto;
-	width:50%;
+	margin-top:1%;
 	margin-left:30%;
-	padding:3%;
+	padding:1%;
 }
 
 #dateselect {
@@ -49,6 +74,7 @@ body {
 	width: 10%;
 	height: 2%;
 	font-size:18px;
+	
 }
 
 #datelabel {
@@ -61,13 +87,14 @@ body {
 
 #login {
 	position:absolute;
-	margin-top: -5%;
+	margin-top: -7.5%;
 	margin-left: 17%;
 	width:13%;
 	height:5%;
 	font-family:Roboto;
 	font-size:21px;
 	font-weight:bold;
+	z-index: -1;
 }
 
 #loginlabel {
