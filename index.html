@@ -18,13 +18,20 @@
 
 <body>
 	<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
+	
+<ul>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href ="help.html">Help</a></li>
+</ul> 
+	
 	<label for = "start" id = "datelabel"> Start date: </label>
 	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
 	<a href = "login.html">
 	<input type = "button" id = "login" value = "Log In"></input> </a>
 	<div id = "databox">
 		<div id = "subdata_county">County</div>
-		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>ETC></div>
+		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>ETC</div>
 	</div>
 	<div id="mapid" style="width: 800px; height: 600px;"></div>
 
@@ -47,6 +54,10 @@
 	function onEachFeature(feature, layer) {
        	 layer.bindPopup(feature.properties.COUNTY_NAME);
        	 layer.setStyle({"color": '#808080'});
+       	 	// color: #ff0000 = red
+       	 	// color: '#e6e600'= yellow - TENTATIVE - BAD WEB COLOR
+       	 	// #0080ff = blue
+       	 	// #808080 = grey / no data
        	 	// Add orange case?
        	 	
 		  layer.on('click', function (e) {
@@ -57,7 +68,7 @@
     });
 	}
 	
-
+	
 	// Bounds are WIP
 	var southWest = L.latLng(30, -150),
 	northEast = L.latLng(50, -114);
