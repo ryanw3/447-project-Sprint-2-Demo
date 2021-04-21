@@ -64,14 +64,28 @@ li a:hover {
 #title {
 	position:static;
 	margin-top:1%;
-	margin-left:30%;
+	margin-left:25%;
+	padding:1%;
+}
+
+#title-about {
+	position:static;
+	margin-top:1%;
+	margin-left:45%;
+	padding:1%;
+}
+
+#title-help {
+	position:static;
+	margin-top:1%;
+	margin-left:43%;
 	padding:1%;
 }
 
 #dateselect {
 	position:static;
 	margin-left:1%;
-	width: 10%;
+	width: 12%;
 	height: 2%;
 	font-size:18px;
 	
@@ -88,7 +102,7 @@ li a:hover {
 #login {
 	position:absolute;
 	margin-top: -7.5%;
-	margin-left: 17%;
+	margin-left: 15.25%;
 	width:13%;
 	height:5%;
 	font-family:Roboto;
@@ -98,13 +112,13 @@ li a:hover {
 }
 
 #loginlabel {
-	margin-left:650px;
+	margin-left:33%;
 }
 
 
 #password {
 	position:absolute;
-	margin-left: 850px;
+	margin-left: 46%;
 	width:200px;
 	margin-top:30px;
 	height:30px;
@@ -112,7 +126,7 @@ li a:hover {
 
 #passwordlabel {
 position:absolute;
-margin-left: 700px;
+margin-left: 35%;
 font-weight:bold;
 font-size:30px;
 
@@ -122,7 +136,7 @@ margin-top:30px;
 
 #usernamelabel {
 	position:absolute;
-	margin-left: 700px;
+	margin-left: 35%;
 	font-weight:bold;
 	font-size:30px;
 
@@ -130,14 +144,14 @@ margin-top:30px;
 
 #username {
 	position:absolute;
-	margin-left: 850px;
+	margin-left: 46%;
 	width:200px;
 	height:30px;
 }
 
 #submit {
 	position:absolute;
-	margin-left: 758px;
+	margin-left: 37%;
 	width:300px;
 	height:30px;
 	margin-top:80px;
