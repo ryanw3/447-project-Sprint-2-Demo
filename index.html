@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-
 	<meta charset="UTF-8">
 	<title> Map </title>
-	
+	<link rel = "icon" href = "images/Home_button.png" type = "image/x-icon">
 	<link rel="stylesheet" href="style.css"/>
 	
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   		crossorigin=""/>
-   		
-   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   		crossorigin=""></script>
- 
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   
 </head>
 
 <body>
 	<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
-	
-	<ul>
-  		<li><a href="index.html">Home</a></li>
-  		<li><a href="about.html">About</a></li>
-  		<li><a href ="help.html">Help</a></li>
-	</ul> 
+	<i class="Hicon"></i>
+<ul>
+  <li><a href="index.html" style="text-align:top;"><img src="images/home_button.png" alt="Home" style="width:23px;height:21px;text-align">Home</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href ="help.html"><img src="images/question_mark.png" alt="Home" style="width:23px;height:21px;">Help</a></li>
+</ul> 
 	
 	<label for = "start" id = "datelabel"> Start date: </label>
 	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
 	<a href = "login.html"><input type = "button" id = "login" value = "Log In"></input> </a>
 	<div id = "databox">
 		<div id = "subdata_county">County</div>
-		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>DATE</div>
+		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>Date</div>
 	</div>
 	<div id="mapid" style="width: 800px; height: 600px;"></div>
 
 
+
 <script>
 
-	// Map Object
 	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -49,15 +47,6 @@
 		tileSize: 512,
 		zoomOffset: -1
 	}).addTo(mymap);
-	
-	// CJF Icon
-	var cjf_icon = L.icon({
-		iconUrl: 'criminal_justice_facility.png',
-		iconSize:		[32, 32],
-		 iconAnchor: [10, 41]
-	});
-	
-	L.marker([51.5, -0.09], {icon: cjf_icon}).addTo(mymap);
 	
 	
 	// This function is called on every geojson object	
@@ -78,11 +67,10 @@
     });
 	}
 	
-	function onEachPrisonFeature(feature, layer) {
-		
-	}
-	
-	// Retrieve county boundaries
+
+
+
+	// JUST NEED COUNTIES
 	var url2 = 'California_County_Boundaries.geojson';
 	var county_bounds = L.geoJSON(null, {
 		onEachFeature: onEachFeature,
@@ -91,39 +79,39 @@
 		}
 		});
 		
-	// Add county boundaries to map
 	$.getJSON(url2, function(data) {
 		county_bounds.addData(data);
 	});
 	
 	county_bounds.addTo(mymap);
 	
-	// Retrieve prison locations
-	var url = 'CA_Prison_Boundaries.geojson'; 
-
-			var  geojsonMarkerOptions = {
-        'radius':6,
-		'opacity': .5,
-		'color': "red",
-		'fillColor':  "blue",
-		'fillOpacity': 0.8
-	};
-	
-  	var prisons = L.geoJSON(null, {
-  		onEachFeature: onEachPrisonFeature,
+		var url = 'CA_Prison_Boundaries.geojson'; 
+ 	//var bbTeam = L.geoJSON(null, {onEachFeature: forEachFeature, style: style});
+  	var bbTeam = L.geoJSON(null, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, geojsonMarkerOptions);
-            //return L.marker(latlng, {icon: cjf_icon});
+            return L.circleMarker(latlng, geojsonMarkerOptions); 
         }
-  	}).addTo(mymap);
-  	
-    $.getJSON(url, function(data) {
-   	 prisons.addData(data); 
+  	});
+
+	// Get GeoJSON data and create features.
+	$.getJSON(url, function(data) {
+	console.log(data);
+        bbTeam.addData(data); 
 	});
 
-
-
-
+	bbTeam.addTo(mymap);
+	
+	
+	
+	// Bounds are WIP
+	var southWest = L.latLng(30, -150),
+	northEast = L.latLng(50, -114);
+	var bounds = L.latLngBounds(southWest, northEast);
+	
+	//mymap.setMaxBounds(bounds);
+	//mmyap.on('drag', function() {
+    //mymap.panInsideBounds(bounds, { animate: true });
+	//});
 	
 </script>
 
