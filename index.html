@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
-   
+   	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
@@ -27,11 +27,10 @@
 	
 	<label for = "start" id = "datelabel"> Start date: </label>
 	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
-	<a href = "login.html">
-	<input type = "button" id = "login" value = "Log In"></input> </a>
+	<a href = "login.html"><input type = "button" id = "login" value = "Log In"></input> </a>
 	<div id = "databox">
 		<div id = "subdata_county">County</div>
-		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>ETC</div>
+		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>DATE</div>
 	</div>
 	<div id="mapid" style="width: 800px; height: 600px;"></div>
 
@@ -55,7 +54,7 @@
        	 layer.bindPopup(feature.properties.COUNTY_NAME);
        	 layer.setStyle({"color": '#808080'});
        	 	// color: #ff0000 = red
-       	 	// color: '#e6e600'= yellow - TENTATIVE - BAD WEB COLOR
+       	 	// color: '#e6e600'= yellow - TENTATIVE
        	 	// #0080ff = blue
        	 	// #808080 = grey / no data
        	 	// Add orange case?
@@ -67,6 +66,41 @@
              console.log(e);
     });
 	}
+	
+
+
+
+	// JUST NEED COUNTIES
+	var url2 = 'California_County_Boundaries.geojson';
+	var county_bounds = L.geoJSON(null, {
+		onEachFeature: onEachFeature,
+		pointToLayer: function(feature, latlng) {
+			return L.geoJSON(latlng, geojsonMarkerOptions);
+		}
+		});
+		
+	$.getJSON(url2, function(data) {
+		county_bounds.addData(data);
+	});
+	
+	county_bounds.addTo(mymap);
+	
+		var url = 'CA_Prison_Boundaries.geojson'; 
+ 	//var bbTeam = L.geoJSON(null, {onEachFeature: forEachFeature, style: style});
+  	var bbTeam = L.geoJSON(null, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions); 
+        }
+  	});
+
+	// Get GeoJSON data and create features.
+	$.getJSON(url, function(data) {
+	console.log(data);
+        bbTeam.addData(data); 
+	});
+
+	bbTeam.addTo(mymap);
+	
 	
 	
 	// Bounds are WIP

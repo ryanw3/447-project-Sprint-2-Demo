@@ -64,7 +64,7 @@ li a:hover {
 #title {
 	position:static;
 	margin-top:1%;
-	margin-left:25%;
+	margin-left:27%;
 	padding:1%;
 }
 
@@ -108,7 +108,7 @@ li a:hover {
 	font-family:Roboto;
 	font-size:21px;
 	font-weight:bold;
-	z-index: -1;
+
 }
 
 #loginlabel {
