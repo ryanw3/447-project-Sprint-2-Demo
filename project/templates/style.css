@@ -2,32 +2,6 @@ body {
 		background-color: #CFEEFA;
 }
 
-ul {
-  list-style-type: none;
-  margin-bottom: 1%;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-  z-index: 0;
-}
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
-}
-
 #databox {
 	display:inline-block;
 	float:left;
@@ -36,64 +10,48 @@ li a:hover {
 }
 
 #subdata_county {
-	position:static;
-	width:200%;
-	height:100%;
+	width:500px;
+	height:50px;
 	background:gray;
 	outline:2px solid black;
-	margin-left:20%;
+	margin-left:30px;
 	margin-top:200px;
 }
 
 #subdata_stats {
-	position:static;
-	width:200%;
-	height:100%;
+	width:500px;
+	height:200px;
 	background:DarkGray;
 	outline:2px solid black;
-		margin-left:20%;
+		margin-left:30px;
 
 }
 
 #mapid {
-	position:static;
-	margin-left: 30%;
-	margin-top:2%;
+	position: absolute;
+	margin-left: 575px;
+	margin-top:70px;
 }
 
 #title {
-	position:static;
-	margin-top:1%;
-	margin-left:27%;
-	padding:1%;
-}
-
-#title-about {
-	position:static;
-	margin-top:1%;
-	margin-left:45%;
-	padding:1%;
-}
-
-#title-help {
-	position:static;
-	margin-top:1%;
-	margin-left:43%;
-	padding:1%;
+	margin:auto;
+	width:50%;
+	margin-left:550px;
+	padding:30px;
 }
 
 #dateselect {
-	position:static;
-	margin-left:1%;
-	width: 12%;
-	height: 2%;
+	margin-left:750px;
+	position:absolute;
+	width: 200px;
+	height: 30px;
 	font-size:18px;
-	
 }
 
 #datelabel {
-	position:static;
-	margin-left:35%;
+	position:absolute;
+	margin-left:195px;
+	margin-top:4px;
 	font-size:21px;
 	font-family:Roboto;
 	font-weight:bold;
@@ -101,24 +59,23 @@ li a:hover {
 
 #login {
 	position:absolute;
-	margin-top: -7.5%;
-	margin-left: 15.25%;
-	width:13%;
-	height:5%;
+	margin-left:1000px;
+	margin-top: -75px;
+	width:250px;
+	height:50px;
 	font-family:Roboto;
 	font-size:21px;
 	font-weight:bold;
-
 }
 
 #loginlabel {
-	margin-left:33%;
+	margin-left:650px;
 }
 
 
 #password {
 	position:absolute;
-	margin-left: 46%;
+	margin-left: 850px;
 	width:200px;
 	margin-top:30px;
 	height:30px;
@@ -126,7 +83,7 @@ li a:hover {
 
 #passwordlabel {
 position:absolute;
-margin-left: 35%;
+margin-left: 700px;
 font-weight:bold;
 font-size:30px;
 
@@ -136,7 +93,7 @@ margin-top:30px;
 
 #usernamelabel {
 	position:absolute;
-	margin-left: 35%;
+	margin-left: 700px;
 	font-weight:bold;
 	font-size:30px;
 
@@ -144,14 +101,14 @@ margin-top:30px;
 
 #username {
 	position:absolute;
-	margin-left: 46%;
+	margin-left: 850px;
 	width:200px;
 	height:30px;
 }
 
 #submit {
 	position:absolute;
-	margin-left: 37%;
+	margin-left: 758px;
 	width:300px;
 	height:30px;
 	margin-top:80px;
