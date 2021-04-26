@@ -1,5 +1,5 @@
 from flask_login import login_required, current_user
-from flask import Blueprint, render_template,request
+from flask import Blueprint, render_template,request,url_for
 from . import db
 from sqlalchemy import create_engine
 import pymysql
@@ -10,13 +10,7 @@ import secrets_ignore
 
 main = Blueprint('main', __name__)
 
-def query_state(return_type,date):
-    '''user = 'db_user'
-    password = 'test_db_pw'
-    pool_recycle = '3600'
-    db_name = 'covid_data'
-    ip_endpoint = '127.0.0.1'''
-    
+def query_state(return_type,date):    
     engine_string = 'mysql+pymysql://' + secrets_ignore.user + ":" + secrets_ignore.password + "@" + secrets_ignore.ip_endpoint + "/" + secrets_ignore.db_name
     #engine_string = 'mysql+pymysql://' + user + ":" + password + "@" + ip_endpoint + "/" + db_name
     print(engine_string)
@@ -38,21 +32,25 @@ def query_state(return_type,date):
         return 0
     else:
         return_this = covid_data_df
+    #print(return_this)
     return return_this
 
 @main.route('/')
 def index():
-    test=query_state("dataframe","'2020-01-28'")
-    print(test, file=sys.stdout)
-    return render_template('index.html')
+    searchedDate = "'2021-01-28'"
+    data=query_state("dataframe",searchedDate)
+    theData=data.to_json(orient="split")
+    print(data, file=sys.stdout)
+    return render_template('index.html', data=theData)
 
 @main.route('/',methods=['POST'])
 def index_post():
     date= request.form.get('date')
     #test=query_state("dataframe","'2020-01-28'")
     datestr="'"+date+"'"
-    #print(datestr, file=sys.stdout)
+    print(datestr)
     theData=query_state("datafame",datestr)
+    print(theData, file=sys.stdout)
     theData=theData.to_json(orient="split")
     print(theData, file=sys.stdout)
     return render_template('index.html', data=theData)
@@ -66,3 +64,19 @@ def profile():
 @login_required
 def showData(date):
     return render_template()
+
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
+@main.route('/help')
+def help():
+    return render_template('about.html')
+
+@main.route('/send_California_County_Boundaries')
+def send_California_County_Boundaries():
+    return "<a href=%s>file</a>" % url_for('static', filename='json/California_County_Boundaries.geojson')
+
+@main.route('/send_CA_Prison_Boundaries')
+def send_CA_Prison_Boundaries():
+    return "<a href=%s>file</a>" % url_for('static', filename='json/CA_Prison_Boundaries.geojson')

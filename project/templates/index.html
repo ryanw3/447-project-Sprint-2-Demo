@@ -6,7 +6,7 @@
 	
 	<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"/>
 	
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
    
@@ -17,29 +17,30 @@
 </head>
 
 <body>
-<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
-<form method="POST" action="/">
+	<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
+	
+<ul>
+  <li><a href="{{ url_for('main.index') }}">Home</a></li>
+  <li><a href="{{ url_for('main.about') }}">About</a></li>
+  <li><a href ="help.html">Help</a></li>
+</ul> 
+	
 	<label for = "start" id = "datelabel"> Start date: </label>
-	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
-	<button>submit</button>
-</form>
-<a href = "{{ url_for('auth.login') }}">
-<input type = "button" id = "login" value = "Log In"></input> </a>
-<div id="mapid" style="width: 800px; height: 600px;"></div>
+	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
+	<a href = "{{ url_for('auth.login') }}">
+	<input type = "button" id = "login" value = "Log In"></input> </a>
+	<div id = "databox">
+		<div id = "subdata_county">County</div>
+		<div id = "subdata_stats">Stats go here<br>Cases:<br>Deaths:<br>ETC</div>
+	</div>
+	<div id="mapid" style="width: 800px; height: 600px;"></div>
+
+
+
 <script>
-	function myFunc(vars) {
-    	return vars
-	}
-	//tempData=myFunc("{{data}}");
-	//enc = encodeURI(tempData);	
-	//dec = decodeURI(enc);
-	console.log({{data|tojson|safe}});
+console.log({{data|tojson|safe}});
 	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
-	
-	
-
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -49,30 +50,35 @@
 	}).addTo(mymap);
 	
 	
-	var myStyle = {
-    "color": "#ff7800",
-    "weight": 5,
-    "opacity": 0.65
-	};
-	
-		function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-        layer.bindPopup(feature.properties.COUNTY_NAME);
-
+	// This function is called on every geojson object	
+	function onEachFeature(feature, layer) {
+       	 layer.bindPopup(feature.properties.COUNTY_NAME);
+       	 layer.setStyle({"color": '#808080'});
+       	 	// color: #ff0000 = red
+       	 	// color: '#e6e600'= yellow - TENTATIVE - BAD WEB COLOR
+       	 	// #0080ff = blue
+       	 	// #808080 = grey / no data
+       	 	// Add orange case?
+       	 	
+		  layer.on('click', function (e) {
+             e = feature.properties.COUNTY_NAME;
+             var element = document.getElementById("subdata_county");
+             element.innerHTML = e;
+             console.log(e);
+    });
 	}
 	
-
-
 	
 	// Bounds are WIP
 	var southWest = L.latLng(30, -150),
 	northEast = L.latLng(50, -114);
 	var bounds = L.latLngBounds(southWest, northEast);
-
+	
 	//mymap.setMaxBounds(bounds);
 	//mmyap.on('drag', function() {
     //mymap.panInsideBounds(bounds, { animate: true });
 	//});
+	
 </script>
 
 </body>

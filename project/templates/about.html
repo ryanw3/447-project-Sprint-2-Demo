@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<title> About </title>
+	<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"/>
+</head>
+
+
+<body>
+	<h1 id = "title"> About Us </h1>
+	
+	<ul>
+  		<li><a href="{{ url_for('main.index') }}">Home</a></li>
+  		<li><a href="{{ url_for('main.about') }}">About</a></li>
+	</ul>
+	 
+	<h2> Created by: Cris Trinidad, Douglas Kalmus, Josh Liao, Ryan Watkins, Tyler Catterton </h2>
+	<p> This project is a visual representation of COVID-19 cases in California's criminal justice facilties. Created by students at the University of Maryland Baltimore County</p>
+
+</body>

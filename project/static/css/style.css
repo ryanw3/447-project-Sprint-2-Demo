@@ -1,32 +1,85 @@
 body {
-		background-color: #B0B3B8;
+		background-color: #CFEEFA;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 1%;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  z-index: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+#databox {
+	display:inline-block;
+	float:left;
+	color:#fff;
+	font-size:40px;
+}
+
+#subdata_county {
+	position:static;
+	width:200%;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-left:20%;
+	margin-top:200px;
+}
+
+#subdata_stats {
+	position:static;
+	width:200%;
+	height:100%;
+	background:DarkGray;
+	outline:2px solid black;
+		margin-left:20%;
+
 }
 
 #mapid {
-	margin:auto;
-	width:50%;
-	margin-top:70px;
+	position:static;
+	margin-left: 30%;
+	margin-top:2%;
 }
 
 #title {
-	margin:auto;
-	width:50%;
-	margin-left:550px;
-	padding:30px;
+	position:static;
+	margin-top:1%;
+	margin-left:30%;
+	padding:1%;
 }
 
 #dateselect {
-	margin-left:850px;
-	position:absolute;
-	width: 200px;
-	height: 30px;
+	position:static;
+	margin-left:1%;
+	width: 10%;
+	height: 2%;
 	font-size:18px;
+	
 }
 
 #datelabel {
-	position:absolute;
-	margin-left:750px;
-	margin-top:4px;
+	position:static;
+	margin-left:35%;
 	font-size:21px;
 	font-family:Roboto;
 	font-weight:bold;
@@ -34,13 +87,14 @@ body {
 
 #login {
 	position:absolute;
-	margin-left:1550px;
-	margin-top: -75px;
-	width:250px;
-	height:50px;
+	margin-top: -7.5%;
+	margin-left: 17%;
+	width:13%;
+	height:5%;
 	font-family:Roboto;
 	font-size:21px;
 	font-weight:bold;
+	z-index: -1;
 }
 
 #loginlabel {
