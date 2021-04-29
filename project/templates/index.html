@@ -28,8 +28,11 @@
   <li><a href ="{{ url_for('main.help') }}"><img src="images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;Help</a></li>
 </ul> 
 	
-	<label for = "start" id = "datelabel"> Start date: </label>
-	<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021"></input>
+	<form method="POST" action="/">
+		<label for = "start" id = "datelabel"> Start date: </label>
+		<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
+		<button>submit</button>
+	</form>
 	<a href = "login.html"><input type = "button" id = "login" value = "Log In"></input> </a>
 	<div id = "databox">
 		<div id = "subdata_county">County</div>
@@ -39,6 +42,10 @@
 
 
 <script>
+
+
+	var county_data = JSON.parse( {{data|tojson}});
+	console.log(county_data);
 
 	// Map Object
 	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
@@ -61,21 +68,68 @@
 	L.marker([51.5, -0.09], {icon: cjf_icon}).addTo(mymap);
 	
 	
+	var hide_prison = null;
+	var hide_county = null;
+	
+	
 	// This function is called on every geojson object	
 	function onEachFeature(feature, layer) {
        	 layer.bindPopup(feature.properties.COUNTY_NAME);
        	 layer.setStyle({"color": '#808080'});
-       	 	// color: #ff0000 = red
-       	 	// color: '#e6e600'= yellow - TENTATIVE
-       	 	// #0080ff = blue
-       	 	// #808080 = grey / no data
-       	 	// Add orange case?
+       	 
+       	 
+       	 
+       	 
+  
+       	 	var i;
+       	 	for (i = 0; i < county_data.data.length; i++) {
+       	 		if (county_data.data[i][2] == feature.properties.COUNTY_NAME) {
+       	 			var cases = county_data.data[i][5];
+       	 			
+					// These buckets likely need to be expanded
+					// Not sure if colors between 1st and last are right
+					if (cases < 100000 && cases > 0) {layer.setStyle({"color": "#30cfd0"});}
+					if (cases >= 100000 && cases < 200000) layer.setStyle({"color": "#269ed9"});
+					if (cases >= 200000 && cases < 300000) {layer.setStyle({"color": "#1f98e0"});}
+					if (cases >= 300000 && cases < 400000) {layer.setStyle({"color": "#2098df"});}
+					if (cases >= 400000 && cases < 500000) {layer.setStyle({"color": "#1e67e1"});}
+					if (cases >= 500000 && cases < 600000) {layer.setStyle({"color": "#1c89e3"});}
+					if (cases >= 600000 && cases < 700000) {layer.setStyle({"color": "#2268dd"});}
+					if (cases >= 700000 && cases < 800000) {layer.setStyle({"color": "#1646e9"});}
+					if (cases >= 800000 && cases < 900000) {layer.setStyle({"color": "#113eee"});}
+					if (cases >= 900000 && cases < 1000000) {layer.setStyle({"color": "#1847e7"});}
+					if (cases > 1000000) {layer.setStyle({"color": "#330867"});}
+
+					console.log(cases);
+       	 			
+       	 			i = 60;
+       	 		}
+       	 	}
+       	 
        	 	
 		  layer.on('click', function (e) {
              e = feature.properties.COUNTY_NAME;
              var element = document.getElementById("subdata_county");
              element.innerHTML = e;
              console.log(e);
+             
+             var element2 = document.getElementById("subdata_stats");
+             var i;
+             for (i = 0; i < county_data.data.length; i++) {
+             	if (county_data.data[i][2] == e) {
+             		var string1 = "Cases: ";
+             		var string2 = county_data.data[i][5];
+             		var string3 = "<br>Deaths: ";
+             		var string4 = county_data.data[i][6];
+             		var string5 = "<br>Date : "; // Convert this to mmddyyyy format
+             		var string6 = county_data.data[i][1];
+             	
+             		element2.innerHTML = string1.concat(string2, string3, string4, string5, string6);
+             		
+ 
+             	}
+             }
+
     });
 	}
 	
@@ -85,7 +139,6 @@
 	
 	// Retrieve county boundaries
 	var url2 = 'http://127.0.0.1:5000/static/json/California_County_Boundaries.geojson';
-	console.log(url2);
 	var county_bounds = L.geoJSON(null, {
 		onEachFeature: onEachFeature,
 		pointToLayer: function(feature, latlng) {
@@ -95,16 +148,18 @@
 		
 	// Add county boundaries to map
 	$.getJSON(url2, function(data) {
-		console.log(county_bounds);
 		county_bounds.addData(data);
 	});
 	
 	county_bounds.addTo(mymap);
 	
+	
 	// Retrieve prison locations
+	
+	/*
 	var url = 'http://127.0.0.1:5000/static/json/CA_Prison_Boundaries.geojson'; 
 
-			var  geojsonMarkerOptions = {
+	var  geojsonMarkerOptions = {
         'radius':6,
 		'opacity': .5,
 		'color': "red",
@@ -112,17 +167,53 @@
 		'fillOpacity': 0.8
 	};
 	
+	$.getJSON(url, function(data) {
+   		prisons.addData(data); 
+	});
+
+	
   	var prisons = L.geoJSON(null, {
-  		onEachFeature: onEachPrisonFeature,
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, geojsonMarkerOptions);
-            //return L.marker(latlng, {icon: cjf_icon});
-        }
-  	}).addTo(mymap);
+           }
+       
+        }).addTo(mymap);
+       
   	
-    $.getJSON(url, function(data) {
-   	 prisons.addData(data); 
-	});
+*/
+
+var url = "http://127.0.0.1:5000/static/json/CA_Prison_Boundaries.geojson";
+
+
+	var  geojsonMarkerOptions = {
+        'radius':6,
+		'opacity': .5,
+		'color': "red",
+		'fillColor':  "blue",
+		'fillOpacity': 0.8
+	};
+
+	function forEachFeature(feature, layer) {
+	};
+
+	 //var bbTeam = L.geoJSON(null, {onEachFeature: forEachFeature, style: style});
+	  var bbTeam = L.geoJSON(null, {
+
+			onEachFeature: forEachFeature, 
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, geojsonMarkerOptions);
+			}
+	  });
+
+	// Get GeoJSON data and create features.
+ 
+        $.getJSON(url, function(data) {
+			bbTeam.addData(data);
+		});
+	
+	
+	bbTeam.addTo(mymap);
+
 
 
 
