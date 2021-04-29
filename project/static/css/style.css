@@ -28,8 +28,19 @@ li a:hover {
   background-color: #111;
 }
 
+#colorcontainer {
+	float:left;
+	margin-left:47%;
+	margin-top:2%;
+}
+
+#colorimg {
+	position:relative;
+	float:right;
+	margin-left:450px;
+}
+
 #databox {
-	display:inline-block;
 	float:left;
 	color:#fff;
 	font-size:40px;
@@ -37,7 +48,7 @@ li a:hover {
 
 #subdata_county {
 	position:static;
-	width:200%;
+	width:320px;
 	height:100%;
 	background:gray;
 	outline:2px solid black;
@@ -47,7 +58,7 @@ li a:hover {
 
 #subdata_stats {
 	position:static;
-	width:200%;
+	width:320px;
 	height:100%;
 	background:DarkGray;
 	outline:2px solid black;
@@ -55,9 +66,59 @@ li a:hover {
 
 }
 
+
+#p_databox {
+	float:right;
+	color:#fff;
+	font-size:40px;
+}
+
+#p_subdata_county {
+	position:static;
+	width:320px;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-right:100px;
+	margin-top:400px;
+}
+
+#p_subdata_stats {
+	position:static;
+	width:320px;
+	height:100%;
+	background:DarkGray;
+	outline:2px solid black;
+	margin-right:100px;
+}
+
+#p_select {
+	position:absolute;
+	float:right;
+	color:#fff;
+	font-size:40px;
+}
+
+#p_select_top {
+	width:450px;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-left:1430px;
+	margin-top:150px;
+}
+
+#p_select_stats {
+	width:450px;
+	height:100%;
+	background:DarkGray;
+	outline:2px solid black;
+	margin-left:1430px;
+}
+
 #mapid {
 	position:static;
-	margin-left: 30%;
+	margin-left: 27%;
 	margin-top:2%;
 }
 
