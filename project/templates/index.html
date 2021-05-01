@@ -54,6 +54,10 @@
 
 	var county_data = JSON.parse( {{data|tojson}});
 	console.log(county_data);
+	
+	var prison_list = [];
+	var button_list = []
+	var button_name_list = [];
 
 	// Map Object
 	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
@@ -65,15 +69,6 @@
 		tileSize: 512,
 		zoomOffset: -1
 	}).addTo(mymap);
-	
-	// CJF Icon
-	var cjf_icon = L.icon({
-		iconUrl: 'criminal_justice_facility.png',
-		iconSize:		[32, 32],
-		 iconAnchor: [10, 41]
-	});
-	
-	L.marker([51.5, -0.09], {icon: cjf_icon}).addTo(mymap);
 	
 	var hide_prison = null;
 	var hide_county = null;
@@ -89,7 +84,6 @@
        	 			var cases = county_data.data[i][5];
        	 			
 					// These buckets likely need to be expanded
-					// Not sure if colors between 1st and last are right
 					if (cases < 1000 && cases > 0) {layer.setStyle({"color": "#30cfd0"});}
 					if (cases >= 1000 && cases < 5000) layer.setStyle({"color": "#00bcce"});
 					if (cases >= 5000 && cases < 10000) {layer.setStyle({"color": "#00adcc"});}
@@ -126,19 +120,74 @@
              		var string6 = county_data.data[i][1];
              	
              		element2.innerHTML = string1.concat(string2, string3, string4, string5, string6);
-             		
- 
+             	}
              	}
              	
              var prison_top = document.getElementById("p_select_top");
              prison_top.innerHTML = e.concat(" Prisons: ");
-             }
+             
+             var p_select = document.getElementById("p_select_stats");
+             //
+             
+             
+             // Clear out p_select
+             	var k2 = 0;
+             	var len = button_list.length;
+             	for (k2 = 0; k2 < len; k2++) {
+             		console.log(prison_list[k2].NAME);
+					var button = document.getElementById(button_name_list[k2]);
+             		p_select.removeChild(button);
+             	}
+             	
+             	p_select_stats.innerHTML = "";
+             
+             // Clear out button list
+             	var k3 = 0;
+             	var len2 = button_list.length;
+             	for (k3 = 0; k3 < len2; k3++) {
+             		button_list.pop();
+             		button_name_list.pop();
+             	}
+             
+             	var j = 0;
+             	var select_string = '';
+      			for (j = 0; j < prison_list.length; j++) {
+   
+   					// THE BEST THING TO DO HERE WOULD BE TO CREATE A BUTTON FOR EACH PRISON, MAKE IT LOOK LIKE TEXT
+   					
+      	
+      				if (prison_list[j].COUNTY == e.toUpperCase()) {
+      					var button = document.createElement("button");
+      					button.id = prison_list[j].NAME;
+      					
+      					button.innerHTML = prison_list[j].NAME;
+      					button_list.push(button);
+      					button_name_list.push(prison_list[j].NAME);
+      					button_list[button_list.length-1].style.color = "white";
+      					button_list[button_list.length-1].style.background = "DarkGray";
+      					button_list[button_list.length-1].style.border = "none";
+      					select_string = select_string.concat(prison_list[j].NAME, '<br>');
+      					
+      					
+      				}
+      			}
+      			//p_select.innerHTML = select_string;
+      			var k = 0;
+      			for (k = 0; k < button_list.length; k++) {
+      				p_select.appendChild(button_list[k]);
+      				p_select.innerHTML = p_select.innerHTML.concat('<br>');
+      			}
+      			
+      			
+      			// On click event for buttons needs to call below prison div + change background color of the clicked button
+             
 
     });
 	}
 	
 	function onEachPrisonFeature(feature, layer) {
-		
+		prison_list.push(feature.properties);
+		console.log(feature.properties);
 	}
 	
 	// Retrieve county boundaries
@@ -177,6 +226,7 @@
 	});
 	
   	var prisons = L.geoJSON(null, {
+  		onEachFeature: onEachPrisonFeature,
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, geojsonMarkerOptions);
            }
