@@ -82,5 +82,21 @@ def send_CA_Prison_Boundaries():
     return "<a href=%s>file</a>" % url_for('static', filename='json/CA_Prison_Boundaries.geojson')
 
 @main.route('/send_bg.png')
-def send_CA_Prison_Boundaries():
-    return "<a href=%s>file</a>" % url_for('static', filename='json/CA_Prison_Boundaries.geojson')
+def send_bg():
+    return "<a href=%s>file</a>" % url_for('templates', filename='images/bg.png')
+
+@main.route('/send_criminal_justice_facility.png')
+def send_criminal_justice_facility():
+    return "<a href=%s>file</a>" % url_for('templates', filename='images/criminal_justice_facility.png')
+
+@main.route('/send_colors.png')
+def send_colors():
+    return "<a href=%s>file</a>" % url_for('templates', filename='images/colors.png')
+
+@main.route('/send_home_button.png')
+def send_home_button():
+    return "<a href=%s>file</a>" % url_for('templates', filename='images/home_button.png')
+
+@main.route('/send_question_mark.png')
+def send_question_mark():
+    return "<a href=%s>file</a>" % url_for('templates', filename='images/question_mark.png')
