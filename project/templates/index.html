@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title> Map </title>
 	
-	<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"/>
+	<link rel="stylesheet" href="style.css"/>
 	
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -26,6 +26,11 @@
   <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;Home</a></li>
   <li><a href="{{ url_for('main.about') }}">&ensp;About</a></li>
   <li><a href ="{{ url_for('main.help') }}"><img src="images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;Help</a></li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li><a href = "login.html">&ensp;Log In</input> </a></li>
 </ul> 
 	
 	<form method="POST" action="/">
@@ -33,7 +38,7 @@
 		<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
 		<button>submit</button>
 	</form>
-	<a href = "login.html"><input type = "button" id = "login" value = "Log In"></input> </a>
+	
 	<div id = "databox">
 		<div id = "subdata_county">County</div>
 		<div id = "subdata_stats">Cases:<br>Deaths:<br>Date:</div>
