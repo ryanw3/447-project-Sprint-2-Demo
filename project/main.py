@@ -80,3 +80,7 @@ def send_California_County_Boundaries():
 @main.route('/send_CA_Prison_Boundaries')
 def send_CA_Prison_Boundaries():
     return "<a href=%s>file</a>" % url_for('static', filename='json/CA_Prison_Boundaries.geojson')
+
+@main.route('/send_bg.png')
+def send_CA_Prison_Boundaries():
+    return "<a href=%s>file</a>" % url_for('static', filename='json/CA_Prison_Boundaries.geojson')

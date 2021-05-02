@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -21,8 +21,10 @@ def login_post():
     #remember = True if we are able to login
     print("Test")
     if checkAuth.query_user(username, password):
-        user = User(username=username, name="Temp", password=password) #generate_password_hash(password, method='sha256'))
-        login_user(user.get_id())
+        #user = User(username=username, name="Temp", password=password) #generate_password_hash(password, method='sha256'))
+        #login_user(user.get_id())
+        session['loggedin'] = True
+        session['username'] = username
     else:
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login'))
@@ -38,7 +40,7 @@ def login_post():
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=false)
     '''
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('main.index'))
 
 @auth.route('/signup')
 def signup():
@@ -51,7 +53,8 @@ def signup_post():
     password = request.form.get('password')
 
     if checkAuth.insert_user(username, password):
-        new_user = User(username=username, name=name, password=password)#generate_password_hash(password, method='sha256'))
+        #new_user = User(username=username, name=name, password=password)#generate_password_hash(password, method='sha256'))
+        redirect(url_for('auth.login'))
     else:
         flash('Username already exists')
         return redirect(url_for('auth.signup'))
@@ -72,5 +75,6 @@ def signup_post():
 @auth.route('/logout')
 @login_required
 def logout():
-    logout_user()
+    session.pop('loggedin', None)
+    session.pop('username', None)
     return redirect(url_for('main.index'))

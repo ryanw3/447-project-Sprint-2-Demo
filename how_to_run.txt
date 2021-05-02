@@ -1,0 +1,5 @@
+cd 447-project-Sprint-2-Demo
+source tracker/bin/activate
+export FLASK_APP=project
+export FLASK_DEBUG=1
+python3 -m flask run
