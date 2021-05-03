@@ -1,0 +1,261 @@
+body {
+		background-color: #CFEEFA;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 1%;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  z-index: 0;
+ 	
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: 2px solid #111;
+  font-size:20px
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+#colorcontainer {
+	float:left;
+	margin-left:47%;
+	margin-top:2%;
+}
+
+#colorimg {
+	position:relative;
+	float:right;
+	margin-left:450px;
+}
+
+#databox {
+	float:left;
+	color:#fff;
+	font-size:40px;
+}
+
+#subdata_county {
+	position:static;
+	width:320px;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-left:20%;
+	margin-top:200px;
+}
+
+#subdata_stats {
+	position:static;
+	width:320px;
+	height:100%;
+	background:DarkGray;
+	outline:2px solid black;
+		margin-left:20%;
+
+}
+
+
+#p_databox {
+	float:right;
+	color:#fff;
+	font-size:40px;
+}
+
+#p_subdata_county {
+	position:static;
+	width:320px;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-right:100px;
+	margin-top:400px;
+}
+
+#p_subdata_stats {
+	position:static;
+	width:320px;
+	height:100%;
+	background:DarkGray;
+	outline:2px solid black;
+	margin-right:100px;
+}
+
+#p_select {
+	position:absolute;
+	float:right;
+	color:#fff;
+}
+
+#p_select_top {
+	font-size: 40px;
+	width:450px;
+	height:100%;
+	background:gray;
+	outline:2px solid black;
+	margin-left:1430px;
+	margin-top:150px;
+}
+
+#p_select_stats {
+	font-size:25px;
+	width:450px;
+	height:100px;
+	background:DarkGray;
+	outline:2px solid black;
+	margin-left:1430px;
+	overflow:scroll;
+}
+
+#mapid {
+	position:static;
+	margin-left: 27%;
+	margin-top:2%;
+}
+
+#title {
+	position:static;
+	margin-top:1%;
+	margin-left:27%;
+	padding:1%;
+}
+
+#title-about {
+	position:static;
+	margin-top:1%;
+	margin-left:45%;
+	padding:1%;
+}
+
+#title-help {
+	position:static;
+	margin-top:1%;
+	margin-left:43%;
+	padding:1%;
+}
+
+#dateselect {
+	position:static;
+	margin-left:1%;
+	width: 12%;
+	height: 2%;
+	font-size:18px;
+	
+}
+
+#datelabel {
+	position:static;
+	margin-left:35%;
+	font-size:21px;
+	font-family:Roboto;
+	font-weight:bold;
+}
+
+#login {
+
+	position:absolute;
+	margin-left:1000px;
+	float:right;
+	font-family:Roboto;
+	font-size:21px;
+	font-weight:bold;
+
+}
+
+#loginlabel {
+	margin-left:33%;
+}
+
+
+#password {
+	position:absolute;
+	margin-left: 46%;
+	width:200px;
+	margin-top:30px;
+	height:30px;
+}
+
+#passwordlabel {
+position:absolute;
+margin-left: 35%;
+font-weight:bold;
+font-size:30px;
+
+margin-top:30px;
+
+}
+
+#usernamelabel {
+	position:absolute;
+	margin-left: 35%;
+	font-weight:bold;
+	font-size:30px;
+
+}
+
+#username {
+	position:absolute;
+	margin-left: 46%;
+	width:200px;
+	height:30px;
+}
+
+#submit {
+	position:absolute;
+	margin-left: 37%;
+	width:300px;
+	height:30px;
+	margin-top:80px;
+	font-weight:bold;
+	font-size:20px;
+}
+
+#databox {
+	
+}
+
+.a div{
+	font-family: Roboto;
+}
+
+.mapdiv feature {
+		fill: #CC1100;
+	stroke: #000000;
+	stroke-width:1px;
+	
+}
+
+
+/* The three below need to be the same - the svg is drawn using diferent shapes*/
+.mapdiv path {
+	fill: #CC1100;
+	stroke: #000000;
+	stroke-width:1px;
+}
+.mapdiv polyline {
+	fill: #CC1100;
+	stroke: #000000;
+	stroke-width:1px;
+}
+
+.mapdiv polygon {
+	fill: #CC1100;
+	stroke: #000000;
+	stroke-width:1px;
+}
+
+#mapid { height: 180px; }
