@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title> Map </title>
 	
-	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"/>
 	
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -23,14 +23,16 @@
 	
 	<i class="Hicon"></i>
 <ul>
-  <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;Home</a></li>
-  <li><a href="{{ url_for('main.about') }}"><img src="images/about_us.png" class = "img" alt="about_us" style="width:32px;height:32px;text-align">&ensp;About</a></li>
-  <li><a href ="{{ url_for('main.help') }}"><img src="images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;Help</a></li>
+  <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
+  <li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
+  <li><a href ="{{ url_for('main.help') }}"><img src="http://127.0.0.1:5000/static/images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;<span>Help</span></a></li>
+  <li><a href = "{{ url_for('main.index') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
+  
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
-  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
-  <li><a href = "login.html">&ensp;Log In</input> </a></li>
+
+  <li><a href = "login.html"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 </ul> 
 	
 	<form method="POST" action="/">
@@ -52,7 +54,7 @@
 		<div id = "p_select_stats">Please Select a County</div>
 	</div>
 	<div id= "mapid" style="width: 800px; height: 600px;"></div>
-	<div id = "colorcontainer"><img src = "images/colors.png" class = "colorimg" alt = "color gradient"></img></div>
+	<div id = "colorcontainer"><img src = "http://127.0.0.1:5000/static/images/colors.png" class = "colorimg" alt = "color gradient"></img></div>
 
 
 <script>
