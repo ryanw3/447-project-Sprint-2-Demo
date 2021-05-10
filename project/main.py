@@ -7,18 +7,22 @@ import pandas as pd
 import sys
 sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
 import secrets_ignore
+import database_queries_covid
 
 main = Blueprint('main', __name__)
 
 def query_state(return_type,date):    
-    engine_string = 'mysql+pymysql://' + secrets_ignore.user + ":" + secrets_ignore.password + "@" + secrets_ignore.ip_endpoint + "/" + secrets_ignore.db_name
-    #engine_string = 'mysql+pymysql://' + user + ":" + password + "@" + ip_endpoint + "/" + db_name
+    engine_string = 'mysql+pymysql://' + \
+                    secrets_ignore.user + ":" + \
+                    secrets_ignore.password + "@" + \
+                    secrets_ignore.ip_endpoint + "/" + \
+                    secrets_ignore.db_name
     print(engine_string)
     engine = create_engine(engine_string)
     dbConnection = engine.connect()
-    searchedDate = date
+    searchedDate = "'2020-01-28'"
     result = dbConnection.execute("SET @a = 'California';")
-    setup = "SET @b = " + searchedDate + ";"
+    setup = "SET @b = " + date + ";"
     print(setup)
     result = dbConnection.execute(setup)
     result = dbConnection.execute("PREPARE cov_read from 'SELECT * from main_covid_data where state=? AND date=? limit 0,10;';")
@@ -32,27 +36,36 @@ def query_state(return_type,date):
         return 0
     else:
         return_this = covid_data_df
-    #print(return_this)
+    dbConnection.close()
     return return_this
+
 
 @main.route('/')
 def index():
     searchedDate = "'2021-01-28'"
-    data=query_state("dataframe",searchedDate)
+    data=database_queries_covid.prepare_one(return_type="dataframe",
+                prepname="cov_read",
+                tbl_name="main_covid_data",
+                where_clause="where county=? and administered_date=? limit 10",
+                var_a=searchedDate)
     theData=data.to_json(orient="split")
-    print(data, file=sys.stdout)
+    #print(data, file=sys.stdout)
     return render_template('index.html', data=theData)
 
 @main.route('/',methods=['POST'])
 def index_post():
     date= request.form.get('date')
-    #test=query_state("dataframe","'2020-01-28'")
     datestr="'"+date+"'"
     print(datestr)
-    theData=query_state("datafame",datestr)
-    print(theData, file=sys.stdout)
+    theData=database_queries_covid.prepare_one(return_type="dataframe",
+                prepname="cov_read",
+                tbl_name="main_covid_data",
+                where_clause="where county=? and administered_date=? limit 10",
+                var_a=datestr)
+    #theData=query_state("datafame",datestr)
+    #print(theData, file=sys.stdout)
     theData=theData.to_json(orient="split")
-    print(theData, file=sys.stdout)
+    #print(theData, file=sys.stdout)
     return render_template('index.html', data=theData)
 
 @main.route('/profile')

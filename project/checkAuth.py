@@ -55,12 +55,11 @@ def insert_user(username, password):
     # If the UN exists, fail
     fail = True
     if result.empty:
-        print("User does not exist")
         fail = False
     if fail:
-        print("User Exists")
+        print(ERROR_MESSAGE)
         dbConnection.close()
-        return False
+        return ERRNO_PW_EXISTS
 
     # If UN DNE, set UN/PW
     print("Here")
@@ -69,7 +68,7 @@ def insert_user(username, password):
     #     "PREPARE cov_insert_user from 'INSERT INTO covid_user_accounts (username, password) VALUES (?,?);';")
     # result = dbConnection.execute("EXECUTE cov_insert_user using @a, @b;")
     dbConnection.close()
-    return True
+    return 1
 
 
 # Get UN/PW
@@ -93,18 +92,19 @@ def query_user(username, password):
     result = dbConnection.execute(
         "PREPARE cov_att_login from 'SELECT * from covid_user_accounts where username=? AND password=?;';")
     result = pd.read_sql("EXECUTE cov_att_login using @a, @b;", dbConnection)
+    print("Uhh T1")
     if result.empty:
         # Failed login, return error
-        print("User does not exist")
+        print("Uhh T2")
         dbConnection.close()
-        return False
+        return ERROR_USER_DNE
     else:
         # Successful login, return token perhaps?  (SESS_ID token?)
-        print("user exists")
+        print("Uhh T3")
         print("Remove me when this is completed")  # TODO: Do login work here
+    print("T4")
     dbConnection.close()
-    return True
+    return 1
 
 if __name__ == "__main__":
     print("RC: " + str(insert_user("AA", "AA")))
-    print("RC: " + str(query_user("AC", "AA")))
