@@ -13,7 +13,12 @@ ul {
 }
 
 li {
-  float: left;
+  float: left; 
+}
+
+
+li a span {
+	vertical-align:30%;
 }
 
 li a {
@@ -23,7 +28,7 @@ li a {
   padding: 14px 16px;
   text-decoration: none;
   border: 2px solid #111;
-  font-size:20px
+  font-size:20px;
 }
 
 /* Change the link color to #111 (black) on hover */
