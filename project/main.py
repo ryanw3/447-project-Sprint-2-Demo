@@ -8,17 +8,17 @@ import sys
 sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
 import secrets_ignore
 import database_queries_covid
-
+main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     searchedDate = "'2021-01-28'"
-    data=database_queries_covid.prepare_two(return_type="dataframe",
+    countyData=database_queries_covid.prepare_two(return_type="dataframe",
                 prepname="cov_read",
                 tbl_name="main_covid_data",
                 where_clause="where state=? AND date=?",
                 var_a='"California"',
                 var_b=searchedDate)
-    theData=data.to_json(orient="split")
+    countyData=countyData.to_json(orient="split")
     prisonData=database_queries_covid.prepare_one(return_type="dataframe",
                 prepname="prison_data",
                 tbl_name="main_prison_data",
@@ -27,7 +27,7 @@ def index():
     print(prisonData)
     prisonData=prisonData.to_json(orient="split")
     #print(data, file=sys.stdout)
-    return render_template('index.html', data=theData,prisonData=prisonData)
+    return render_template('index.html', data=countyData,prisonData=prisonData)
 
 @main.route('/',methods=['POST'])
 def index_post():
@@ -48,7 +48,7 @@ def index_post():
     prisonData=prisonData.to_json(orient="split")
     #theData=query_state("datafame",datestr)
     #print(theData, file=sys.stdout)
-    theData=theData.to_json(orient="split")
+    countyData=countyData.to_json(orient="split")
     print(prisonData, file=sys.stdout)
     return render_template('index.html', data=countyData, prisonData=prisonData)
 
