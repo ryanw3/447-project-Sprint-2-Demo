@@ -43,12 +43,20 @@ def query_state(return_type,date):
 @main.route('/')
 def index():
     searchedDate = "'2021-01-28'"
-    data=database_queries_covid.prepare_one(return_type="dataframe",
+    data=database_queries_covid.prepare_two(return_type="dataframe",
                 prepname="cov_read",
                 tbl_name="main_covid_data",
-                where_clause="where county=? and administered_date=? limit 10",
-                var_a=searchedDate)
+                where_clause="where state=? AND date=?",
+                var_a='"California"',
+                var_b=searchedDate)
     theData=data.to_json(orient="split")
+    prisonData=database_queries_covid.prepare_one(return_type="dataframe",
+                prepname="prison_data",
+                tbl_name="main_prison_data",
+                where_clause="where date=?",
+                var_a=searchedDate)
+    print(prisonData)
+    prisonData=prisonData.to_json(orient="split")
     #print(data, file=sys.stdout)
     return render_template('index.html', data=theData)
 
@@ -57,15 +65,22 @@ def index_post():
     date= request.form.get('date')
     datestr="'"+date+"'"
     print(datestr)
-    theData=database_queries_covid.prepare_one(return_type="dataframe",
+    theData=database_queries_covid.prepare_two(return_type="dataframe",
                 prepname="cov_read",
                 tbl_name="main_covid_data",
-                where_clause="where county=? and administered_date=? limit 10",
+                where_clause="where state=? AND date=?",
+                var_a='"California"',
+                var_b=datestr)
+    prisonData=database_queries_covid.prepare_one(return_type="dataframe",
+                prepname="prison_data",
+                tbl_name="main_prison_data",
+                where_clause="where date=?",
                 var_a=datestr)
+    prisonData=prisonData.to_json(orient="split")
     #theData=query_state("datafame",datestr)
     #print(theData, file=sys.stdout)
     theData=theData.to_json(orient="split")
-    #print(theData, file=sys.stdout)
+    print(prisonData, file=sys.stdout)
     return render_template('index.html', data=theData)
 
 @main.route('/profile')
