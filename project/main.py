@@ -9,37 +9,6 @@ sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
 import secrets_ignore
 import database_queries_covid
 
-main = Blueprint('main', __name__)
-
-def query_state(return_type,date):    
-    engine_string = 'mysql+pymysql://' + \
-                    secrets_ignore.user + ":" + \
-                    secrets_ignore.password + "@" + \
-                    secrets_ignore.ip_endpoint + "/" + \
-                    secrets_ignore.db_name
-    print(engine_string)
-    engine = create_engine(engine_string)
-    dbConnection = engine.connect()
-    searchedDate = "'2020-01-28'"
-    result = dbConnection.execute("SET @a = 'California';")
-    setup = "SET @b = " + date + ";"
-    print(setup)
-    result = dbConnection.execute(setup)
-    result = dbConnection.execute("PREPARE cov_read from 'SELECT * from main_covid_data where state=? AND date=? limit 0,10;';")
-    covid_data_df = pd.read_sql("EXECUTE cov_read using @a, @b;", dbConnection)
-    pd.set_option('display.expand_frame_repr', False)
-    if return_type == "csv":
-        return_this = covid_data_df.to_csv()
-    elif return_type == "print":
-        print(covid_data_df.to_csv())
-        print(covid_data_df)
-        return 0
-    else:
-        return_this = covid_data_df
-    dbConnection.close()
-    return return_this
-
-
 @main.route('/')
 def index():
     searchedDate = "'2021-01-28'"
@@ -58,14 +27,14 @@ def index():
     print(prisonData)
     prisonData=prisonData.to_json(orient="split")
     #print(data, file=sys.stdout)
-    return render_template('index.html', data=theData)
+    return render_template('index.html', data=theData,prisonData=prisonData)
 
 @main.route('/',methods=['POST'])
 def index_post():
     date= request.form.get('date')
     datestr="'"+date+"'"
     print(datestr)
-    theData=database_queries_covid.prepare_two(return_type="dataframe",
+    countyData=database_queries_covid.prepare_two(return_type="dataframe",
                 prepname="cov_read",
                 tbl_name="main_covid_data",
                 where_clause="where state=? AND date=?",
@@ -81,7 +50,7 @@ def index_post():
     #print(theData, file=sys.stdout)
     theData=theData.to_json(orient="split")
     print(prisonData, file=sys.stdout)
-    return render_template('index.html', data=theData)
+    return render_template('index.html', data=countyData, prisonData=prisonData)
 
 @main.route('/profile')
 @login_required
