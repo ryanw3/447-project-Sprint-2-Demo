@@ -1,5 +1,5 @@
 from flask_login import login_required, current_user
-from flask import Blueprint, render_template,request,url_for
+from flask import Blueprint, render_template,request,url_for, session
 from . import db
 from sqlalchemy import create_engine
 import pymysql
@@ -32,7 +32,7 @@ def index():
     prisonData=prisonData.to_json(orient="split")
     print(prisonData)
     #print(data, file=sys.stdout)
-    return render_template('index.html', data=countyData,prisonData=prisonData, date=date)
+    return render_template('index.html', data=countyData,prisonData=prisonData, date=date, loggedin=checkLogin())
 
 @main.route('/',methods=['POST'])
 def index_post():
@@ -53,13 +53,13 @@ def index_post():
     prisonData=prisonData.to_json(orient="split")
     countyData=countyData.to_json(orient="split")
     print(prisonData, file=sys.stdout)
-    return render_template('index.html', data=countyData, prisonData=prisonData, date=date)
+    return render_template('index.html', data=countyData, prisonData=prisonData, date=date, loggedin=checkLogin())
 
-@main.route('/profile')
+'''@main.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
-
+'''
 @main.route('/data')
 @login_required
 def showData(date):
@@ -100,3 +100,14 @@ def send_home_button():
 @main.route('/send_question_mark.png')
 def send_question_mark():
     return "<a href=%s>file</a>" % url_for('templates', filename='images/question_mark.png')
+
+@main.route('/database')
+def database():
+    if(session['loggedin'] == True):
+        return render_template('database.html')
+    else:
+        print("yope")
+        return render_template('index.html')
+
+def checkLogin():
+    return session["loggedin"]
