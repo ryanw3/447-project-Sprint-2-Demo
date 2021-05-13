@@ -20,8 +20,6 @@
 
 <body>
 	<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
-	
-	<i class="Hicon"></i>
 <ul>
   <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
   <li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
@@ -31,17 +29,13 @@
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
-  {% if loggedin==True %}
-  <li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Sign out</span></input> </a></li>
-  {% endif %}
-  {% if loggedin==False %}
-  <li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
-  {% endif %}
+
+  <li><a href = "{{ url_for('main.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 </ul> 
 	
 	<form method="POST" action="/">
 		<label for = "start" id = "datelabel"> Start date: </label>
-		<input type = "date" id = "dateselect" value ="{{date}}" min = "01/01/2020" max = "04/12/2021" name="date"></input>
+		<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
 		<button>submit</button>
 	</form>
 	
@@ -52,7 +46,7 @@
 		<div id = "p_databox">
 		<div id = "p_subdata_county">Prison</div>
 		<div id = "p_subdata_stats">Cases:<br>Deaths:<br>Date:</div>
-	</div>
+	</div>                                                                         
 	<div id = "p_select">
 		<div id = "p_select_top">Select Prison</div>
 		<div id = "p_select_stats">Please Select a County</div>
@@ -64,7 +58,10 @@
 <script>
 
 	var county_data = JSON.parse( {{data|tojson}});
+	var prison_data = JSON.parse ( {{prisonData|tojson}})
 	console.log(county_data);
+	console.log("STOPS HERE");
+	console.log(prison_data);
 	
 	var prison_list = [];
 	var button_list = []
@@ -107,7 +104,7 @@
 					if (cases >= 80000 && cases < 1000000) {layer.setStyle({"color": "#1f267f"});}
 					if (cases > 1000000) {layer.setStyle({"color": "#330867"});}
 
-					console.log(cases);
+			//		console.log(cases);
        	 			
        	 			i = 60;
        	 		}
@@ -146,6 +143,9 @@
              	var len = button_list.length;
              	for (k2 = 0; k2 < len; k2++) {
              		console.log(prison_list[k2].NAME);
+             		
+             		
+             		
 					var button = document.getElementById(button_name_list[k2]);
              		p_select.removeChild(button);
              	}
@@ -166,20 +166,60 @@
       	
       				if (prison_list[j].COUNTY == e.toUpperCase()) {
       					var button = document.createElement("button");
-      					button.id = prison_list[j].NAME;
-      					
-      				
-      					
-      					button.innerHTML = prison_list[j].NAME;
+      					button.id = prison_list[j].ADDRESS;
+         					
+         				var name = prison_list[j].NAME;
+         				var br = "<br />";
+         				
+         				button.innerHTML = name + "&nbsp;&nbsp;&nbsp;&nbsp;&emsp;";
+      					//button.innerHTML = prison_list[j].NAME;
+      					//button.innerHTML.append("<br>");
       					button_list.push(button);
       					
-      					button_name_list.push(prison_list[j].NAME);
+      					button_name_list.push(prison_list[j].ADDRESS);
       					button.style.color = "white";
       					button.style.background = "DarkGray";
       					button.style.border = "none";
       					//ref.Attributes.Add("onclick", "prison_button_click()");
       					button.addEventListener('click', function(){
-      						alert("working"); }, false);
+      						var p_name = document.getElementById("p_subdata_county");
+      						var p_data = document.getElementById("p_subdata_stats");
+      						console.log(this.id); 
+      						var i = 0;
+
+      						for (i = 0; i < prison_data.data.length; i++) {
+      							console.log(prison_data.data[i][4]);
+      							
+      							
+      							//console.log(prison_data.data[i][31]);
+      							//console.log("equal?");
+      							//console.log(this.id);
+      							
+      							if (prison_data.data[i][31] == this.id) { console.log ("MATCH FOUND");}
+      							if (prison_data.data[i][31] == this.id) {
+      							
+      							p_name.innerHTML = prison_data.data[i][4];
+      							
+             						var string1 = "Cases: ";
+             						var string2 = prison_data.data[i][7];
+             						var string3 = "<br>Deaths: ";
+            				 		var string4 = prison_data.data[i][9];
+            				 	//	var string5 = "<br>Staff Cases: ";
+            				 	//	var string6 = prison_data.data[i][8];
+            				 	//	var string7 = "<br>Staff Deaths: "
+            				 		//var string8 = prison_data.data[i][10];
+        				     		var string9 = "<br>Date : "; 
+             						var string10 = prison_data.data[i][5];
+             		
+             				p_data.innerHTML = string1.concat(string2, string3, string4, string9, string10);
+      								
+      							}
+      						
+      						}
+      						
+      						// Parse prison json object, where name ==, set the data
+      						
+      						}, false);
       						
       				
       					
@@ -192,6 +232,8 @@
       			var k = 0;
       			for (k = 0; k < button_list.length; k++) {
       				p_select.appendChild(button_list[k]);
+      			//	p_select.innerHTML = p_select.innerHTML.concat("<br>");
+      				
       				
       				//button_list[k].setAttribute("onclick", cons);
       				button_list[k].onclick = prison_button_click();
@@ -226,7 +268,7 @@
 	
 	function onEachPrisonFeature(feature, layer) {
 		prison_list.push(feature.properties);
-		console.log(feature.properties);
+	//	console.log(feature.properties);
 	}
 	
 	// Retrieve county boundaries

@@ -8,10 +8,10 @@
 
 <div class="a">
 <h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
-<h2 id = "loginlabel" class = "a"> <u>Please enter your username and password:</u> </h2>
+
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Login</h3>
+ 
     <div class="box">
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -20,12 +20,27 @@
     </div>
     {% endif %} 
     {% endwith %}
+    
+    	<ul>
+  <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
+  <li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
+  <li><a href ="{{ url_for('main.help') }}"><img src="http://127.0.0.1:5000/static/images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;<span>Help</span></a></li>
+  <li><a href = "{{ url_for('main.database') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
+  
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+
+  <li><a href = "login.html"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+</ul> 
+
+<h2 id = "loginlabel" class = "a"> <u>Please enter your username and password:</u> </h2>
 <form method="POST" action="/login">
     <label  id = "usernamelabel" for="User">Username:</label>
     <input id = "username" type="text" id="User" name="User"><br><br>
     <label id = "passwordlabel" for="pass">Password:</label>
     <input id = "password" type="password" id="pass" name="password"><br><br>
-    <button class="Button">Login</button>
+  	 <button id="submit">Submit</button>
 </form>
 </div>
 </body>
