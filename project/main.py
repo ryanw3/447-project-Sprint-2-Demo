@@ -8,26 +8,31 @@ import sys
 sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
 import secrets_ignore
 import database_queries_covid
+from datetime import datetime , timedelta
+
 main = Blueprint('main', __name__)
 @main.route('/')
 def index():
-    searchedDate = "'2021-01-28'"
+    #searchedDate = "'2021-01-28'"
+    date=datetime.today() - timedelta(days=7)
+    date=date.strftime('%Y-%m-%d')
+    datestr = "'"+date+"'"
     countyData=database_queries_covid.prepare_two(return_type="dataframe",
                 prepname="cov_read",
                 tbl_name="main_covid_data",
                 where_clause="where state=? AND date=?",
                 var_a='"California"',
-                var_b=searchedDate)
-    countyData=countyData.to_json(orient="split")
+                var_b=datestr)
     prisonData=database_queries_covid.prepare_one(return_type="dataframe",
                 prepname="prison_data",
                 tbl_name="main_prison_data",
                 where_clause="where date=?",
-                var_a=searchedDate)
-    print(prisonData)
+                var_a=datestr)
+    countyData=countyData.to_json(orient="split")
     prisonData=prisonData.to_json(orient="split")
+    print(prisonData)
     #print(data, file=sys.stdout)
-    return render_template('index.html', data=countyData,prisonData=prisonData)
+    return render_template('index.html', data=countyData,prisonData=prisonData, date=date)
 
 @main.route('/',methods=['POST'])
 def index_post():
@@ -46,11 +51,9 @@ def index_post():
                 where_clause="where date=?",
                 var_a=datestr)
     prisonData=prisonData.to_json(orient="split")
-    #theData=query_state("datafame",datestr)
-    #print(theData, file=sys.stdout)
     countyData=countyData.to_json(orient="split")
     print(prisonData, file=sys.stdout)
-    return render_template('index.html', data=countyData, prisonData=prisonData)
+    return render_template('index.html', data=countyData, prisonData=prisonData, date=date)
 
 @main.route('/profile')
 @login_required
