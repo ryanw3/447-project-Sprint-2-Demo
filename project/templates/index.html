@@ -30,12 +30,12 @@
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 
-  <li><a href = "{{ url_for('main.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+  <li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 </ul> 
 	
 	<form method="POST" action="/">
 		<label for = "start" id = "datelabel"> Start date: </label>
-		<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
+		<input type = "date" id = "dateselect" value = {{date}} min = "01/01/2020" max = "04/12/2021" name="date"></input>
 		<button>submit</button>
 	</form>
 	

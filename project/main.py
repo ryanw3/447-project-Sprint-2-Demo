@@ -6,46 +6,21 @@ from datetime import datetime , timedelta
 main = Blueprint('main', __name__)
 @main.route('/')
 def index():
-    #searchedDate = "'2021-01-28'"
-    date=datetime.today() - timedelta(days=7)
+    date=datetime.today()
     date=date.strftime('%Y-%m-%d')
-    datestr = "'"+date+"'"
-    countyData=database_queries_covid.prepare_two(return_type="dataframe",
-                prepname="cov_read",
-                tbl_name="main_covid_data",
-                where_clause="where state=? AND date=?",
-                var_a='"California"',
-                var_b=datestr)
-    prisonData=database_queries_covid.prepare_one(return_type="dataframe",
-                prepname="prison_data",
-                tbl_name="main_prison_data",
-                where_clause="where date=?",
-                var_a=datestr)
+    countyData=database_queries_covid.get_latest_update_covid(date)
+    prisonData=database_queries_covid.get_latest_update_prison(date)
     countyData=countyData.to_json(orient="split")
     prisonData=prisonData.to_json(orient="split")
-    print(prisonData)
-    #print(data, file=sys.stdout)
     return render_template('index.html', data=countyData,prisonData=prisonData, date=date, loggedin=checkLogin())
 
 @main.route('/',methods=['POST'])
 def index_post():
     date= request.form.get('date')
-    datestr="'"+date+"'"
-    print(datestr)
-    countyData=database_queries_covid.prepare_two(return_type="dataframe",
-                prepname="cov_read",
-                tbl_name="main_covid_data",
-                where_clause="where state=? AND date=?",
-                var_a='"California"',
-                var_b=datestr)
-    prisonData=database_queries_covid.prepare_one(return_type="dataframe",
-                prepname="prison_data",
-                tbl_name="main_prison_data",
-                where_clause="where date=?",
-                var_a=datestr)
+    countyData=database_queries_covid.get_latest_update_covid(date)
+    prisonData=database_queries_covid.get_latest_update_prison(date)
     prisonData=prisonData.to_json(orient="split")
     countyData=countyData.to_json(orient="split")
-    #print(prisonData, file=sys.stdout)
     return render_template('index.html', data=countyData, prisonData=prisonData, date=date, loggedin=checkLogin())
 
 @main.route('/about')
