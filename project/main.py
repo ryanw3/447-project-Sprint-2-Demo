@@ -1,13 +1,6 @@
-from flask_login import login_required, current_user
 from flask import Blueprint, render_template,request,url_for, session
-from . import db
-from sqlalchemy import create_engine
-import pymysql
 import pandas as pd
-import sys
-sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
-import secrets_ignore
-import database_queries_covid
+from . import database_queries_covid
 from datetime import datetime , timedelta
 
 main = Blueprint('main', __name__)
@@ -52,18 +45,8 @@ def index_post():
                 var_a=datestr)
     prisonData=prisonData.to_json(orient="split")
     countyData=countyData.to_json(orient="split")
-    print(prisonData, file=sys.stdout)
+    #print(prisonData, file=sys.stdout)
     return render_template('index.html', data=countyData, prisonData=prisonData, date=date, loggedin=checkLogin())
-
-'''@main.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', name=current_user.name)
-'''
-@main.route('/data')
-@login_required
-def showData(date):
-    return render_template()
 
 @main.route('/about')
 def about():
@@ -103,6 +86,13 @@ def send_question_mark():
 
 @main.route('/database')
 def database():
+    if(session['loggedin'] == True):
+        return render_template('database.html')
+    else:
+        return render_template('index.html')
+
+@main.route('/database',methods=['POST'])
+def database_post():
     if(session['loggedin'] == True):
         return render_template('database.html')
     else:
