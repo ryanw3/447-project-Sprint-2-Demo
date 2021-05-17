@@ -14,13 +14,13 @@
 		<li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
 		<li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
 		<li><a href ="{{ url_for('main.help') }}"><img src="http://127.0.0.1:5000/static/images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;<span>Help</span></a></li>
-		<li><a href = "{{ url_for('main.index') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
+		<li><a href = "{{ url_for('main.database') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
   
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 
-		<li><a href = "login.html"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+		<li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 	</ul> 
 	 
 	<h2> How to use this webpage </h2>
@@ -31,9 +31,10 @@
 	<p>To change the date you are looking at use the box next to the word "Start Date" in this box you can type out a date in the mm/dd/yyyy format or you can use the calender icon on the right side of the box to select a date from a calender view.</p>
 
 	<h3>Navigation Bar</h3>
-	<p>On the Black bar running across your screen you may see two to three options on it such as "Home" "About" and "Help", by clicking on any of these options you will be taken to that page.</p>
-	<p>"Home" is the main webpage here you can see the covid data for any given day and also login in.</p>
+	<p>On the Black bar running across your screen you may see two to three options on it such as "Home" "About" "Help" and "Database", by clicking on any of these options you will be taken to that page.</p>
+	<p>"Home" is the main webpage here you can see the covid data for any given day and also login in. Click on a county to display stats on the left side, the prisons show up on the right in the prison data section.</p>
 	<p>"About" is the page where we've listed a few things about this webpage along with some information about us, the lovely people who worked hard to make it.</p>
 	<p>"Help" Is the page you are currently on so dont be scared if you dont currently see this option in the bar, This page is used to help break down how to use and interact with this webpage, if you ever get stuck trying to use this page this is the place to find answers.</p>
+	<p>"Database" Allows you to directly interact with the database of covid data.</p>
 
 </body>

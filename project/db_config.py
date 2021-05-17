@@ -1,5 +1,5 @@
 import sqlalchemy # For the proper sqlalchemy types
-from .db_gen_secret import *  # Add in the secrets (user, password, ip endpoint)
+from db_gen_secret import *  # Add in the secrets (user, password, ip endpoint)
 
 #######################
 # Connection - Main DB user

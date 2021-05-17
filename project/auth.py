@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 #import sys
 #sys.path.append("/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/project/")
-from . import db_return_codes
-from . import checkAuth
+import db_return_codes
+import checkAuth
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login')

@@ -1,4 +1,5 @@
-from . import db_config
+import os
+import db_config
 import uuid
 
 #######################

@@ -1,11 +1,11 @@
 import pandas as pd
 from sqlalchemy import create_engine
 import sqlalchemy
-from . import db_logger
-from . import db_utils
-from . import db_tests
-from .db_return_codes import *
-from .db_config import *
+import db_logger
+import db_utils
+import db_tests
+from db_return_codes import *
+from db_config import *
 
 
 #######################

@@ -1,5 +1,5 @@
 import sqlalchemy
-from . import db_config
+import db_config
 import pymysql.cursors
 
 

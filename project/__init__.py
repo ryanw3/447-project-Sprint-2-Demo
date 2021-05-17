@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 #import secrets_ignore
 # init SQLAlchemy so we can use it later in our models
+import sys, os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(dir_path) 
+
 db = SQLAlchemy()
 
 

@@ -2,10 +2,10 @@ from sqlalchemy import create_engine
 import sqlalchemy
 import pymysql
 import pandas as pd
-from . import db_config
-from . import db_utils
-from . import db_return_codes
-from . import db_logger
+import db_config
+import db_utils
+import db_return_codes
+import db_logger
 
 
 def insert_user(username: str, password: str):

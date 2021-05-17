@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template,request,url_for, session, redirect, flash
 import pandas as pd
 import os
-from . import db_update_more_databases
-from . import database_queries_covid
+import db_update_more_databases
+import database_queries_covid
 from datetime import datetime , timedelta  
 main = Blueprint('main', __name__)
 from werkzeug.utils import secure_filename

@@ -1,9 +1,9 @@
 import pandas as pd
 from sqlalchemy import create_engine
-from . import db_config
+import db_config
 import datetime
 import sqlalchemy
-from . import db_utils
+import db_utils
 import json
 
 reserved_tables = [{db_config.COVID_DATA_TBL_NAME},

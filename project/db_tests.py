@@ -1,12 +1,12 @@
 import requests
-from . import db_config
-from . import db_utils
-from . import db_logger
-from . import db_table_initializers
-from . import db_update_database
-from . import db_update_more_databases
-from . import database_queries_covid
-from . import database_queries_users as database_queries_users
+import db_config
+import db_utils
+import db_logger
+import db_table_initializers
+import db_update_database
+import db_update_more_databases
+import database_queries_covid
+import database_queries_users as database_queries_users
 import random
 import string
 

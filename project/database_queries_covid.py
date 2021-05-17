@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 import pymysql
 import pandas as pd
-from . import db_config
-from . import db_utils
+import db_config
+import db_utils
 
 def get_latest_update_covid(date: str) -> pd.DataFrame:
     dbConnection = db_utils.db_connect()

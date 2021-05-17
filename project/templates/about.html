@@ -14,13 +14,13 @@
 		<li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
 		<li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
 		<li><a href ="{{ url_for('main.help') }}"><img src="http://127.0.0.1:5000/static/images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;<span>Help</span></a></li>
-		<li><a href = "{{ url_for('main.index') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
+		<li><a href = "{{ url_for('main.database') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
   
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 		<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 
-		<li><a href = "login.html"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+		<li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 	</ul> 
 	 
 	<h2> Created by: Cris Trinidad, Douglas Kalmus, Josh Liao, Ryan Watkins, Tyler Catterton </h2>
