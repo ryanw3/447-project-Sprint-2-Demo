@@ -29,33 +29,31 @@
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
   <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
 
-  <li><a href = "{{ url_for('main.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+  <li><a href = "{{ url_for('auth.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
 </ul> 
 
 <h2 id = "loginlabel"><u>Database Access - Use this page to upload your own county/prison dataset</u></h2> 
 <br>
 
-<form method="POST" action="/????">
-        <form method="POST" action="/database">
-            <div class="field">
-                <div class="control">
-                 <label  id = "usernamelabel" for="User">URL:</label>
-
-                    <input id="username" type="email" name="email" placeholder="Url" autofocus="">
-                </div>
+    <form method="POST" action="/database" enctype=multipart/form-data>
+        <div class="field">
+            <div class="control">
+                <label  id = "usernamelabel" for="User">CSV:</label>
+                <input type="file" name="file" accept=".csv">
             </div>
-            
-            <br><br>
+        </div>
+        
+        <br><br>
 
-            <div class="field">
-                <div class="control">
-                    <label id = "passwordlabel" for="pass">Columns:</label>
-                    <input id="password" type="password" name="password" placeholder="Column entry">
-                </div>
+        <div class="field">
+            <div class="control">
+                <label id = "passwordlabel" for="pass">Name of database:</label>
+                <input id="password" type="text" name="name" placeholder="Name of database">
             </div>
-            <br>
-            <button id="submit">Submit</button>
-        </form>
+        </div>
+        <br>
+        <button id="submit">Submit</button>
+    </form>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,10 @@
+import os
+os.system(f"apt install python3-pip")
+os.system(f"python3 -m pip install sqlalchemy")
+os.system(f"python3 -m pip install pandas")
+os.system(f"python3 -m pip install flask")
+os.system(f"python3 -m pip install ")
+os.system(f"python3 -m pip install sqlalchemy")
+os.system(f"python3 -m pip install sqlalchemy")
+os.system(f"python3 -m pip install sqlalchemy")
+os.system(f"python3 -m pip install sqlalchemy")

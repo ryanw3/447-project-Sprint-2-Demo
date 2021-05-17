@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/ryan/Desktop/myProject/auth"
+set -gx VIRTUAL_ENV "/home/ryan/Desktop/tracker/447-project-Sprint-2-Demo/tracker"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
@@ -52,8 +52,8 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
         set -l old_status $status
 
         # Prompt override?
-        if test -n "(auth) "
-            printf "%s%s" "(auth) " (set_color normal)
+        if test -n "(tracker) "
+            printf "%s%s" "(tracker) " (set_color normal)
         else
             # ...Otherwise, prepend env
             set -l _checkbase (basename "$VIRTUAL_ENV")

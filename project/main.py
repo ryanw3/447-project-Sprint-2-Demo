@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template,request,url_for, session
+from flask import Blueprint, render_template,request,url_for, session, redirect, flash
 import pandas as pd
+import os
+from . import db_update_more_databases
 from . import database_queries_covid
-from datetime import datetime , timedelta
-
+from datetime import datetime , timedelta  
 main = Blueprint('main', __name__)
+from werkzeug.utils import secure_filename
+
 @main.route('/')
 def index():
     date=datetime.today()
@@ -68,11 +71,20 @@ def database():
 
 @main.route('/database',methods=['POST'])
 def database_post():
-    if(session['loggedin'] == True):
-        return render_template('database.html')
-    else:
-        print("yope")
-        return render_template('index.html')
+    name = request.form.get('name')
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+    path = os.path.join('project/uploads', filename)
+    file.save(path)
+    db_update_more_databases.create_new_table(path, name)
+    flash('File added to database')
+    return redirect(url_for('main.index'))
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'csv'
 
 def checkLogin():
     return session["loggedin"]
