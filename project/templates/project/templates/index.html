@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+
+	<meta charset="UTF-8">
+	<title> Map </title>
+	
+	<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"/>
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   		crossorigin=""/>
+   		
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   		crossorigin=""></script>
+ 
+</head>
+
+<body>
+	<h1 font-family:"Roboto" id = "title">Covid-19 Cases in California Criminal Justice Facilities</h1>
+<ul>
+  <li><a href="{{ url_for('main.index') }}" style="text-align:top;"><img src="http://127.0.0.1:5000/static/images/home_button.png" class = "img" alt="home_icon" style="width:32px;height:32px;text-align">&ensp;<span>Home</span></a></li>
+  <li><a href="{{ url_for('main.about') }}"><img src="http://127.0.0.1:5000/static/images/about_us.png" alt="about_icon" style="width:32px;height:32px;">&ensp;<span>About</span></a></li>
+  <li><a href ="{{ url_for('main.help') }}"><img src="http://127.0.0.1:5000/static/images/question_mark.png" alt="help_icon" style="width:32px;height:32px;">&ensp;<span>Help</span></a></li>
+  <li><a href = "{{ url_for('main.database') }}"><img src = "http://127.0.0.1:5000/static/images/db_access.png" alt = "database_icon" style="width:32px;height:32px;">&ensp;<span>Database Access</span></a></li>
+  
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+  <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li>
+
+  <li><a href = "{{ url_for('main.login') }}"><img src="http://127.0.0.1:5000/static/images/login_button.png" alt="login_icon" style="width:35px;height:32px;">&ensp;<span>Log In</span></input> </a></li>
+</ul> 
+	
+	<form method="POST" action="/">
+		<label for = "start" id = "datelabel"> Start date: </label>
+		<input type = "date" id = "dateselect" value = "4/12/2021" min = "01/01/2020" max = "04/12/2021" name="date"></input>
+		<button>submit</button>
+	</form>
+	
+	<div id = "databox">
+		<div id = "subdata_county">County</div>
+		<div id = "subdata_stats">Cases:<br>Deaths:<br>Date:</div>
+	</div>
+		<div id = "p_databox">
+		<div id = "p_subdata_county">Prison</div>
+		<div id = "p_subdata_stats">Cases:<br>Deaths:<br>Date:</div>
+	</div>                                                                         
+	<div id = "p_select">
+		<div id = "p_select_top">Select Prison</div>
+		<div id = "p_select_stats">Please Select a County</div>
+	</div>
+	<div id= "mapid" style="width: 800px; height: 600px;"></div>
+	<div id = "colorcontainer"><img src = "http://127.0.0.1:5000/static/images/colors.png" class = "colorimg" alt = "color gradient"></img></div>
+
+
+<script>
+
+	var county_data = JSON.parse( {{data|tojson}});
+	var prison_data = JSON.parse ( {{prisonData|tojson}})
+	console.log(county_data);
+	console.log("STOPS HERE");
+	console.log(prison_data);
+	
+	var prison_list = [];
+	var button_list = []
+	var button_name_list = [];
+
+	// Map Object
+	var mymap = L.map('mapid').setView(new L.LatLng(37, -121), 6);
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(mymap);
+	
+	var hide_prison = null;
+	var hide_county = null;
+	
+	// This function is called on every geojson object	
+	function onEachFeature(feature, layer) {
+       	 layer.bindPopup(feature.properties.COUNTY_NAME);
+       	 layer.setStyle({"color": '#808080', "weight": 1});
+       	 
+       	 	var i;
+       	 	for (i = 0; i < county_data.data.length; i++) {
+       	 		if (county_data.data[i][2] == feature.properties.COUNTY_NAME) {
+       	 			var cases = county_data.data[i][5];
+       	 			
+					// These buckets likely need to be expanded
+					if (cases < 1000 && cases > 0) {layer.setStyle({"color": "#30cfd0"});}
+					if (cases >= 1000 && cases < 5000) layer.setStyle({"color": "#00bcce"});
+					if (cases >= 5000 && cases < 10000) {layer.setStyle({"color": "#00adcc"});}
+					if (cases >= 10000 && cases < 20000) {layer.setStyle({"color": "#009bc9"});}
+					if (cases >= 20000 && cases < 30000) {layer.setStyle({"color": "#0089c4"});}
+					if (cases >= 30000 && cases < 40000) {layer.setStyle({"color": "#0076bc"});}
+					if (cases >= 40000 && cases < 50000) {layer.setStyle({"color": "#0063b2"});}
+					if (cases >= 50000 && cases < 60000) {layer.setStyle({"color": "#0050a4"});}
+					if (cases >= 60000 && cases < 80000) {layer.setStyle({"color": "#003c93"});}
+					if (cases >= 80000 && cases < 1000000) {layer.setStyle({"color": "#1f267f"});}
+					if (cases > 1000000) {layer.setStyle({"color": "#330867"});}
+
+			//		console.log(cases);
+       	 			
+       	 			i = 60;
+       	 		}
+       	 	}
+       	 	
+		  layer.on('click', function (e) {
+             e = feature.properties.COUNTY_NAME;
+             var element = document.getElementById("subdata_county");
+             element.innerHTML = e + " (Total)";
+             console.log(e);
+             
+             var element2 = document.getElementById("subdata_stats");
+             var i;
+             for (i = 0; i < county_data.data.length; i++) {
+             	if (county_data.data[i][2] == e) {
+             		var string1 = "Cases: ";
+             		var string2 = county_data.data[i][5];
+             		var string3 = "<br>Deaths: ";
+             		var string4 = county_data.data[i][6];
+             		var string5 = "<br>Date : "; // Convert this to mmddyyyy format
+             		var string6 = county_data.data[i][1];
+             	
+             		element2.innerHTML = string1.concat(string2, string3, string4, string5, string6);
+             	}
+             	}
+             	
+             var prison_top = document.getElementById("p_select_top");
+             prison_top.innerHTML = e.concat(" Prisons: ");
+             
+             var p_select = document.getElementById("p_select_stats");
+             //
+             
+             
+             // Clear out p_select
+             	var k2 = 0;
+             	var len = button_list.length;
+             	for (k2 = 0; k2 < len; k2++) {
+             		console.log(prison_list[k2].NAME);
+             		
+             		
+             		
+					var button = document.getElementById(button_name_list[k2]);
+             		p_select.removeChild(button);
+             	}
+             	
+             	p_select_stats.innerHTML = "";
+             
+             // Clear out button list
+             	var k3 = 0;
+             	var len2 = button_list.length;
+             	for (k3 = 0; k3 < len2; k3++) {
+             		button_list.pop();
+             		button_name_list.pop();
+             	}
+             
+             	var j = 0;
+             	var select_string = '';
+      			for (j = 0; j < prison_list.length; j++) {
+      	
+      				if (prison_list[j].COUNTY == e.toUpperCase()) {
+      					var button = document.createElement("button");
+      					button.id = prison_list[j].ADDRESS;
+         					
+         				var name = prison_list[j].NAME;
+         				var br = "<br />";
+         				
+         				button.innerHTML = name + "&nbsp;&nbsp;&nbsp;&nbsp;&emsp;";
+      					//button.innerHTML = prison_list[j].NAME;
+      					//button.innerHTML.append("<br>");
+      					button_list.push(button);
+      					
+      					button_name_list.push(prison_list[j].ADDRESS);
+      					button.style.color = "white";
+      					button.style.background = "DarkGray";
+      					button.style.border = "none";
+      					//ref.Attributes.Add("onclick", "prison_button_click()");
+      					button.addEventListener('click', function(){
+      						var p_name = document.getElementById("p_subdata_county");
+      						var p_data = document.getElementById("p_subdata_stats");
+      						console.log(this.id); 
+      						var i = 0;
+
+      						for (i = 0; i < prison_data.data.length; i++) {
+      							console.log(prison_data.data[i][4]);
+      							
+      							
+      							//console.log(prison_data.data[i][31]);
+      							//console.log("equal?");
+      							//console.log(this.id);
+      							
+      							if (prison_data.data[i][31] == this.id) { console.log ("MATCH FOUND");}
+      							if (prison_data.data[i][31] == this.id) {
+      							
+      							p_name.innerHTML = prison_data.data[i][4];
+      							
+             						var string1 = "Cases: ";
+             						var string2 = prison_data.data[i][7];
+             						var string3 = "<br>Deaths: ";
+            				 		var string4 = prison_data.data[i][9];
+            				 	//	var string5 = "<br>Staff Cases: ";
+            				 	//	var string6 = prison_data.data[i][8];
+            				 	//	var string7 = "<br>Staff Deaths: "
+            				 		//var string8 = prison_data.data[i][10];
+        				     		var string9 = "<br>Date : "; 
+             						var string10 = prison_data.data[i][5];
+             		
+             				p_data.innerHTML = string1.concat(string2, string3, string4, string9, string10);
+      								
+      							}
+      						
+      						}
+      						
+      						// Parse prison json object, where name ==, set the data
+      						
+      						}, false);
+      						
+      				
+      					
+      					select_string = select_string.concat(prison_list[j].NAME, '<br>');
+      					
+      					
+      				}
+      			}
+      			//p_select.innerHTML = select_string;
+      			var k = 0;
+      			for (k = 0; k < button_list.length; k++) {
+      				p_select.appendChild(button_list[k]);
+      			//	p_select.innerHTML = p_select.innerHTML.concat("<br>");
+      				
+      				
+      				//button_list[k].setAttribute("onclick", cons);
+      				button_list[k].onclick = prison_button_click();
+      			//	p_select.innerHTML = p_select.innerHTML.concat('<br>');
+      			}
+      			
+      			
+      			// On click event for buttons needs to call below prison div + change background color of the clicked button
+             
+
+    });
+	}
+	
+	function myFunction() {
+    var btn = document.createElement("BUTTON");
+    var t = document.createTextNode("CLICK ME");
+
+    btn.setAttribute("style","color:red;font-size:23px");
+
+    btn.appendChild(t);
+    document.body.appendChild(btn);
+
+    btn.setAttribute("onclick", alert("clicked"));
+
+}
+
+	
+	function prison_button_click() {
+		console.log("Working");
+	
+	}
+	
+	function onEachPrisonFeature(feature, layer) {
+		prison_list.push(feature.properties);
+	//	console.log(feature.properties);
+	}
+	
+	// Retrieve county boundaries
+	var url2 = 'http://127.0.0.1:5000/static/json/California_County_Boundaries.geojson';
+	var county_bounds = L.geoJSON(null, {
+		onEachFeature: onEachFeature,
+		pointToLayer: function(feature, latlng) {
+			return L.geoJSON(latlng, geojsonMarkerOptions);
+		}
+		});
+		
+	// Add county boundaries to map
+	$.getJSON(url2, function(data) {
+		county_bounds.addData(data);
+	});
+	
+	county_bounds.addTo(mymap);
+	
+	
+	// Retrieve prison locations
+	
+	var url = 'http://127.0.0.1:5000/static/json/CA_Prison_Boundaries.geojson'; 
+
+	var  geojsonMarkerOptions = {
+        'radius':6,
+		'opacity': .5,
+		'color': "red",
+		'fillColor':  "blue",
+		'fillOpacity': 0.8
+	};
+	
+	
+	var url = "http://127.0.0.1:5000/static/json/CA_Prison_Boundaries.geojson";
+	$.getJSON(url, function(data) {
+   		prisons.addData(data); 
+	});
+	
+  	var prisons = L.geoJSON(null, {
+  		onEachFeature: onEachPrisonFeature,
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
+           }
+       
+        }).addTo(mymap);
+        
+</script>
+
+</body>
